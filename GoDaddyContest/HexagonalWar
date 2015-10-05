@@ -1,0 +1,164 @@
+package GoDaddyContest;
+
+import java.util.Scanner;
+
+public class HexagonalWar {
+	
+public static Boolean findWinner(int[][] grids, int[][] traversed, int value,int row, int col)
+{
+	Boolean check1=false;
+	Boolean check2=false;
+	Boolean check3=false;
+	Boolean check4=false;
+	Boolean check5=false;
+	Boolean check6=false;
+	//if(value==2){
+	//System.out.println("calling findWinner"+row+" "+col+" "+grids.length+" "+value);
+		
+		if((value ==2) && (grids.length-1==row))
+		{
+			//System.out.println("yes");
+		
+			return true;	
+		}
+//		System.out.println("check romans"+row+" "+col+" "+grids[0].length);
+		else if((value==1)&&(grids[0].length-1==col))
+		{
+			//System.out.println("inside");
+		return true;	
+		}
+		else {
+			if(!(row==0))
+			{		
+				if((grids[row-1][col]==value) && (traversed[row-1][col]!=1))
+				{
+					traversed[row-1][col]=1;
+					check1 =findWinner(grids,traversed,value,row-1,col);
+					//System.out.println("check1");
+				}
+			}
+           if(!(col==0))
+           {	
+				if((grids[row][col-1]==value) && (traversed[row][col-1] != 1))
+				{
+					traversed[row][col-1]=1;
+					check2=findWinner(grids,traversed,value,row,col-1);
+					//System.out.println("check2");
+				}
+			}
+           if(!(col==grids[1].length-1))
+           {
+        	   if((grids[row][col+1]==value) && (traversed[row][col+1]!=1))
+        	   {
+        		   traversed[row][col+1]=1;
+        		   check3 =findWinner(grids,traversed, value,row,col+1);
+    			   //System.out.println("check3");
+        	   }
+           }
+			if((!(row==grids.length-1)) && (!(col==0)) )
+			{
+				if((grids[row+1][col-1]==value) && (traversed[row+1][col-1]!=1))
+				{
+					traversed[row+1][col-1]=1;
+					check4 =findWinner(grids,traversed,value,row+1,col-1);
+				    //System.out.println("check4");
+				}
+			}
+			if((!(row==grids.length-1)))
+			{
+				if((grids[row+1][col]==value) && (traversed[row+1][col]!=1))
+				{
+					traversed[row+1][col]=1;
+					check5 =findWinner(grids,traversed,value,row+1,col);
+				    //System.out.println("check5");
+				}
+			}
+			if((!(col==grids[1].length-1)) && (!(row==0)))
+			{
+				if((grids[row-1][col+1]==value) && (traversed[row-1][col+1]!=1))
+				{
+					traversed[row-1][col+1]=1;
+					check6=findWinner(grids,traversed,value,row-1,col+1);
+					//System.out.println("check6");
+				}
+			}
+			if(check1 | check2 | check3 | check4 | check5 | check6)
+			    	return true;
+			else
+					return false;
+		}	
+
+	}
+	
+	//System.out.println("above check "+check);
+	//return false;
+
+
+
+public static void main(String ar[])
+{
+	Scanner scan=new Scanner(System.in);
+	int num=scan.nextInt();
+	int moves=scan.nextInt();
+//	System.out.println(num+" "+moves);
+	int grids[][]=new int[num][num];
+	int traversed[][]=new int[num][num];
+//	System.out.println(grids[0].length+" "+grids.length);
+	for(int i=1;i<=moves;i++)
+	{
+		int a=scan.nextInt();
+		int b=scan.nextInt();
+		if(!(i%2==0))
+		{
+			grids[a-1][(b-1)]=1;
+		}
+		else
+		{
+			grids[a-1][(b-1)]=2;
+		}
+	}
+	Boolean winner=false;
+	int persian=0;
+	if(!winner){
+	for(int j=0;j<grids[0].length;j++)
+	{
+		if(grids[persian][j]==2)
+		{
+			traversed[persian][j]=1;
+			if(findWinner(grids, traversed, 2,persian,j))
+			{
+				System.out.println("PERSIANS");	
+				winner=true;
+				return;
+			}
+		}
+	}
+	
+	int roman=0;
+	for(int j=0;j<grids.length;j++)
+	{
+		if(grids[j][roman]==1)
+		{
+			traversed[j][roman]=1;
+			if(findWinner(grids, traversed, 1,j,roman)==true)
+			{
+//				System.out.println(findWinner(grids,1,j,roman));
+				System.out.println("ROMANS");
+				winner=true;
+				return;
+			}
+		}
+	}
+	
+	}
+	
+	if(!winner)
+	{
+		System.out.println("NEITHER");
+	}
+	
+//	findWinner(grids);
+	scan.close();
+	
+	}
+}
