@@ -1,0 +1,44 @@
+package DyanmicProgramming;
+
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
+
+public class FibonacciModified {
+    public static BigInteger findFibonacci(BigInteger first, BigInteger second, long index)
+        {
+    	BigInteger num=BigInteger.valueOf(0);
+    	Map<Long,BigInteger> fib=new HashMap();
+    	for(long i=3;i<=index;i++)
+    	{
+    		fib.put(i,getTerm(first,second));
+    		first=second;
+    		second=fib.get(i);
+    	}
+    	
+    	num=fib.get(index);
+    	return num;
+    	
+    }
+    
+    
+    public static BigInteger getTerm(BigInteger a,BigInteger b)
+    {
+    	BigInteger term=BigInteger.valueOf(0);
+    	term=(b.multiply(b)).add(a);
+    
+    	return term;
+    }
+    public static void main(String[] args) {
+    Scanner scan=new Scanner(System.in);
+        BigInteger first=BigInteger.valueOf(scan.nextInt());
+        BigInteger second=BigInteger.valueOf(scan.nextInt());
+        long index=scan.nextInt();
+     
+        System.out.println(findFibonacci(first,second,index));
+     
+     scan.close();   
+        
+        
+    }
+}
