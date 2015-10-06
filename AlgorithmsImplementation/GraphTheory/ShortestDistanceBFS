@@ -1,0 +1,80 @@
+package GraphTheory;
+
+import java.util.Scanner;
+
+public class ShortestDistanceBFS {
+	
+	public static void findShortest(int[][] adjacencyMatrix,int source)
+	{
+	
+	for(int node=0;node<adjacencyMatrix.length;node++)
+	{
+	if(!(node==source))
+	{
+		if(adjacencyMatrix[source][node]==-1)
+		{
+			for(int innerNode=0;innerNode<adjacencyMatrix.length;innerNode++)
+			{
+				if(!(innerNode==source))
+				{
+					if(!(adjacencyMatrix[source][innerNode]==-1))
+					{
+						if(!(adjacencyMatrix[innerNode][node]==-1))
+						{
+							adjacencyMatrix[source][node]=adjacencyMatrix[source][innerNode]+adjacencyMatrix[innerNode][node];
+						}
+						else
+						{
+							findShortest(adjacencyMatrix,node);
+						}
+					}
+				}
+			}
+		}
+	}
+	}
+		
+		
+	}
+	
+	public static void main(String ar[])
+	{
+	Scanner scan=new Scanner(System.in);
+	int testCases=scan.nextInt();
+	
+	//for every test case
+	for(int i=1;i<=testCases;i++)
+	{
+		int nodes=scan.nextInt();
+		int edges=scan.nextInt();
+		int length=6;
+		int adjacencyMatrix[][]=new int[nodes][nodes];
+		
+		
+		//initialize array with -1
+		for(int row=0;row<nodes;row++)
+		{
+			for(int col=0;col<nodes;col++)
+			{
+				adjacencyMatrix[row][col]=adjacencyMatrix[col][row]-1;
+			}
+		}
+		
+		//fill up adjacency Matric with user inputs
+		for(int j=0;j<edges;j++)
+		{
+			int a=scan.nextInt();
+			int b=scan.nextInt();
+			adjacencyMatrix[a-1][b-1]=length;
+		}
+		
+		int source=scan.nextInt();
+		
+		//call findShortest to print distance for every testcase and source-1 for matrix staring with zero
+		findShortest(adjacencyMatrix,source-1);
+		System.out.println();
+	}
+
+	scan.close();
+	}
+}
