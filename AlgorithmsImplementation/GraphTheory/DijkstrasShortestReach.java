@@ -20,11 +20,19 @@ public class DijkstrasShortestReach {
 		distances.put(closestToSource,adjacencyMatrix[source][closestToSource]);
 		int node;
 		
+		
 		for(int i=0;i<nodes;i++)
 		{
+			innerif:
 			if(!(distances.containsKey(i)))
 			{
 			node=findClosest(adjacencyMatrix,closestToSource,distances);
+			if(node==-1)
+			{
+				closestToSource=findClosest(adjacencyMatrix,source,distances);
+				distances.put(closestToSource,adjacencyMatrix[source][closestToSource]);
+				break innerif;
+			}
 			adjacencyMatrix[source][node]=adjacencyMatrix[source][closestToSource]+adjacencyMatrix[closestToSource][node];
 			adjacencyMatrix[node][source]=adjacencyMatrix[source][closestToSource]+adjacencyMatrix[closestToSource][node];
 			distances.put(node, adjacencyMatrix[source][node]);
