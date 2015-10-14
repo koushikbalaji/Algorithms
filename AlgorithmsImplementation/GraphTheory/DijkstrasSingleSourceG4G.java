@@ -1,10 +1,14 @@
-package GraphTheory;
+package GoDaddyContest;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
-public class DijkstrasSingleSourceG4G {
+public class DijkstraSingleSourceG4G {
 	
-	public static void dijkstra(int adjacencyMatrix[][], int source)
+public static HashMap<Integer,int []> answers=new HashMap<Integer,int []>();
+	public static int[] dijkstra(int adjacencyMatrix[][], int source)
 	{
 		int nodes=adjacencyMatrix.length;
 		int distance[]=new int[adjacencyMatrix.length];//output array d[i] shortest distance from source to i
@@ -36,12 +40,14 @@ public class DijkstrasSingleSourceG4G {
 			}
 		}
 		
-		for(int k=0;k<nodes;k++)
-		{
-			if(k!=source)
-			System.out.print(distance[k]+" ");
-		}
-		System.out.println();
+//		for(int k=0;k<nodes;k++)
+//		{
+//			if(k!=source)
+//			System.out.print(distance[k]+" ");
+//		}
+//		System.out.println();
+		
+		return distance;
 	}
 
 	public static int minDistance(int distance[],Boolean[] treeSet)
@@ -70,12 +76,15 @@ public class DijkstrasSingleSourceG4G {
 		//for every test case
 		for(int i=1;i<=testCases;i++)
 		{
-			int nodes=scan.nextInt();
+			int nodes,edges,adjacencyMatrix[][];
+			if(scan.hasNextInt());
+			{
+			nodes=scan.nextInt();
 //			System.out.println(nodes);
-			int edges=scan.nextInt();
+			edges=scan.nextInt();
 //			System.out.println(edges);
-			int adjacencyMatrix[][]=new int[nodes][nodes];
-			
+			adjacencyMatrix=new int[nodes][nodes];
+			}
 			//initialize array with -1
 			for(int row=0;row<nodes;row++)
 			{
@@ -96,9 +105,13 @@ public class DijkstrasSingleSourceG4G {
 			int j=0;
 			while(j<edges)
 				{
-				int a=scan.nextInt();
-				int b=scan.nextInt();
-				int length=scan.nextInt();
+				int a,b,length;
+				if(scan.hasNextInt());
+				{
+				 a=scan.nextInt();
+				 b=scan.nextInt();
+				 length=scan.nextInt();
+				}
 //				System.out.println(a+" "+b+" "+length);
 				if(adjacencyMatrix[a-1][b-1]==-1)
 				{
@@ -114,10 +127,29 @@ public class DijkstrasSingleSourceG4G {
 				}	
 			
 			int source=scan.nextInt()-1;
-			dijkstra(adjacencyMatrix,source);
+			int distance[]=dijkstra(adjacencyMatrix,source);
+			answers.put(i,distance);
 		}
+		
+		
+			for(int[] i:answers.values())
+			{
+				for(int j=0;j<i.length;j++)
+				{
+					if(i[j]==Integer.MAX_VALUE)
+						System.out.print(-1+" ");
+					else
+					{
+						if(i[j]!=0)
+						System.out.print(i[j]+" ");
+					}
+				}
+				System.out.println();
+			}
+		
 		scan.close();
 	}
 	
 	
 }
+
