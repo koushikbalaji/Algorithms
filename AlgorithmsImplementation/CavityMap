@@ -1,0 +1,40 @@
+package AlgoImplementation;
+
+import java.util.Scanner;
+
+public class CavityMap {
+	
+	public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+		Scanner scan=new Scanner(System.in);
+		int number=scan.nextInt();
+		char[][] map=new char[number][number];
+		for(int num=0;num<number;num++)
+		{
+			String cell=scan.next();
+			map[num]=cell.toCharArray();
+		}
+		for(int row=0;row<number;row++)
+		{
+			for(int col=0;col<number;col++)
+			{
+				if(row==0||row==number-1)
+				{
+					System.out.print(map[row][col]);
+				}
+				else if (col==0||col==number-1)
+				{
+					System.out.print(map[row][col]);
+				}
+				else
+				{
+					if((int)map[row][col]>(int)map[row][col+1]&&(int)map[row][col]>(int)map[row][col-1]&&(int)map[row][col]>(int)map[row-1][col]&&(int)map[row][col]>(int)map[row+1][col])
+					System.out.print("X");
+					else
+						System.out.print(map[row][col]);
+				}
+			}
+			System.out.println();
+		}
+    }
+}
