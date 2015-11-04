@@ -1,6 +1,7 @@
 package AlgoImplementation;
 
 import java.math.BigInteger;
+import java.util.BitSet;
 import java.util.Scanner;
 
 public class TeamAndTopics {
@@ -11,11 +12,17 @@ public class TeamAndTopics {
 		Scanner scan=new Scanner(System.in);
 		int number=scan.nextInt();
 		int topics=scan.nextInt();
-		
-		String[] data=new String[number];
+		Boolean check=true;
+		BitSet[] data=new BitSet[number];
 		for(int i=0;i<number;i++)
 		{
-			data[i]=scan.next();
+			String tempString=scan.next();
+			data[i]=new BitSet(tempString.length());
+			for(int j=0;j<tempString.length();j++)
+			{
+				if(tempString.charAt(j)=='1')
+				data[i].set(j,check);
+			}
 		}
 		
 	
@@ -25,20 +32,13 @@ public class TeamAndTopics {
 		{
 			for(int j=i+1;j<data.length;j++)
 			{
-				String tempString;
 				int tempCount=0;
-				BigInteger tempInt=new BigInteger(data[i]);
-				BigInteger tempInt2=new BigInteger(data[j]);
-				tempInt=tempInt.add(tempInt2);
-				tempString=tempInt.toString();
-				for(int k=0;k<tempString.length();k++)
-				{
-					if(tempString.charAt(k)=='0')
-					{
-						tempCount++;
-					}
-				}
-				tempCount=tempString.length()-tempCount;
+				BitSet temp=new BitSet();
+				temp.or(data[i]);
+				temp.or(data[j]);
+				
+				tempCount=temp.cardinality();
+				
 				if(tempCount>maxTopics)
 				{
 					maxTopics=tempCount;
