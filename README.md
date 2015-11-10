@@ -1,2 +1,1 @@
-# HackerRank
-HackerRank Java codes
+#Algorithms and Programming Contests
